@@ -32,7 +32,7 @@ jobs:
         run: python bot.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
+          CHAT_ID: 669785876
           FORCE_RECAP: ${{ inputs.force_recap }}
  
       - name: Salva la lista nel repository

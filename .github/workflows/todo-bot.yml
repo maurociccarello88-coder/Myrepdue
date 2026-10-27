@@ -1,0 +1,43 @@
+name: Todo bot
+ 
+on:
+  schedule:
+    # Ogni ora al minuto 5 (UTC). Il recap parte al primo passaggio dopo le 19:00 di Roma.
+    - cron: "5 * * * *"
+  workflow_dispatch:
+    inputs:
+      force_recap:
+        description: "Invia subito il recap (per test)"
+        type: boolean
+        default: false
+ 
+permissions:
+  contents: write
+ 
+concurrency:
+  group: todo-bot
+  cancel-in-progress: false
+ 
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+ 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+ 
+      - name: Esegui il bot
+        run: python bot.py
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: 669785876
+          FORCE_RECAP: ${{ inputs.force_recap }}
+ 
+      - name: Salva la lista nel repository
+        run: |
+          git config user.name "todo-bot"
+          git config user.email "todo-bot@users.noreply.github.com"
+          git add todo.json
+          git diff --cached --quiet || (git commit -m "Aggiorna todo" && git push)

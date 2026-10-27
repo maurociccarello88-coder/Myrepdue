@@ -1,5 +1,18 @@
 {
-  "offset": 0,
+  "offset": 200012460,
   "last_recap": "",
-  "items": []
+  "items": [
+    {
+      "text": "Carta igienica",
+      "cat": "generale"
+    },
+    {
+      "text": "Crema di arachidi",
+      "cat": "generale"
+    },
+    {
+      "text": "Sapone intimo",
+      "cat": "generale"
+    }
+  ]
 }

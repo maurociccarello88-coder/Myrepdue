@@ -1,5 +1,5 @@
 {
-  "offset": 200012460,
+  "offset": 200012461,
   "last_recap": "2026-10-27",
   "items": [
     {
@@ -12,6 +12,10 @@
     },
     {
       "text": "Sapone intimo",
+      "cat": "generale"
+    },
+    {
+      "text": "Batteria piccola tonda",
       "cat": "generale"
     }
   ]

@@ -1,5 +1,5 @@
 {
-  "offset": 200012461,
+  "offset": 200012462,
   "last_recap": "2026-10-27",
   "items": [
     {
@@ -16,6 +16,10 @@
     },
     {
       "text": "Batteria piccola tonda",
+      "cat": "generale"
+    },
+    {
+      "text": "Bagno doccia delicato",
       "cat": "generale"
     }
   ]

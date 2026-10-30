@@ -1,5 +1,5 @@
 {
-  "offset": 200012462,
+  "offset": 200012463,
   "last_recap": "2026-10-29",
   "items": [
     {
@@ -20,6 +20,10 @@
     },
     {
       "text": "Bagno doccia delicato",
+      "cat": "generale"
+    },
+    {
+      "text": "Spugnette cucina",
       "cat": "generale"
     }
   ]

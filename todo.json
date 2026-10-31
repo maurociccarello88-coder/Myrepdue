@@ -1,5 +1,5 @@
 {
-  "offset": 200012465,
+  "offset": 200012466,
   "last_recap": "2026-10-30",
   "items": [
     {
@@ -32,6 +32,10 @@
     },
     {
       "text": "Pastiglie lavastoviglie",
+      "cat": "generale"
+    },
+    {
+      "text": "Spray orecchie",
       "cat": "generale"
     }
   ]

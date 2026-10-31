@@ -1,42 +1,5 @@
 {
-  "offset": 200012466,
+  "offset": 200012468,
   "last_recap": "2026-10-30",
-  "items": [
-    {
-      "text": "Carta igienica",
-      "cat": "generale"
-    },
-    {
-      "text": "Crema di arachidi",
-      "cat": "generale"
-    },
-    {
-      "text": "Sapone intimo",
-      "cat": "generale"
-    },
-    {
-      "text": "Batteria piccola tonda",
-      "cat": "generale"
-    },
-    {
-      "text": "Bagno doccia delicato",
-      "cat": "generale"
-    },
-    {
-      "text": "Spugnette cucina",
-      "cat": "generale"
-    },
-    {
-      "text": "Yogurt",
-      "cat": "generale"
-    },
-    {
-      "text": "Pastiglie lavastoviglie",
-      "cat": "generale"
-    },
-    {
-      "text": "Spray orecchie",
-      "cat": "generale"
-    }
-  ]
+  "items": []
 }

@@ -1,5 +1,5 @@
 {
-  "offset": 200012463,
+  "offset": 200012465,
   "last_recap": "2026-10-30",
   "items": [
     {
@@ -24,6 +24,14 @@
     },
     {
       "text": "Spugnette cucina",
+      "cat": "generale"
+    },
+    {
+      "text": "Yogurt",
+      "cat": "generale"
+    },
+    {
+      "text": "Pastiglie lavastoviglie",
       "cat": "generale"
     }
   ]

@@ -1,9 +1,13 @@
 {
-  "offset": 200012471,
+  "offset": 200012474,
   "last_recap": "2026-11-03",
   "items": [
     {
-      "text": "Domani compleanno di Marco",
+      "text": "Sapone bucato",
+      "cat": "generale"
+    },
+    {
+      "text": "Ammorbidente",
       "cat": "generale"
     }
   ]

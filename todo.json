@@ -1,5 +1,5 @@
 {
-  "offset": 200012474,
+  "offset": 200012476,
   "last_recap": "2026-11-07",
   "items": [
     {
@@ -8,6 +8,82 @@
     },
     {
       "text": "Ammorbidente",
+      "cat": "generale"
+    },
+    {
+      "text": "Fette biscottate",
+      "cat": "generale"
+    },
+    {
+      "text": "- Petto di pollo: 500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Tonno al naturale: 1 scatoletta grande",
+      "cat": "generale"
+    },
+    {
+      "text": "- Uova: 1 confezione da 6",
+      "cat": "generale"
+    },
+    {
+      "text": "- Yogurt bianco naturale: 1 confezione da 750 g o 1 kg",
+      "cat": "generale"
+    },
+    {
+      "text": "- Fiocchi d'avena: 1 confezione da 500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Pane integrale: 1 confezione da 400-500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Pasta: 1 confezione da 500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Riso: 1 confezione da 500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Patate: 1 kg",
+      "cat": "generale"
+    },
+    {
+      "text": "- Ceci in scatola: 1 lattina grande (circa 240 g sgocciolati)",
+      "cat": "generale"
+    },
+    {
+      "text": "- Lenticchie secche: 1 confezione da 500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Banane: 3",
+      "cat": "generale"
+    },
+    {
+      "text": "- Mele: 3",
+      "cat": "generale"
+    },
+    {
+      "text": "- Zucchine: 400 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Carote: 500 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Spinaci surgelati: 1 confezione da 450 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Passata di pomodoro: 1 bottiglia da 700 g",
+      "cat": "generale"
+    },
+    {
+      "text": "- Cipolle: 2",
       "cat": "generale"
     }
   ]

@@ -1,94 +1,126 @@
 {
-  "offset": 200012477,
+  "offset": 200012478,
   "last_recap": "2026-11-08",
   "items": [
     {
       "text": "Sapone bucato",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 1
     },
     {
       "text": "Ammorbidente",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 2
     },
     {
       "text": "Fette biscottate",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 3
     },
     {
       "text": "- Petto di pollo: 500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 4
     },
     {
       "text": "- Tonno al naturale: 1 scatoletta grande",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 5
     },
     {
       "text": "- Uova: 1 confezione da 6",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 6
     },
     {
       "text": "- Yogurt bianco naturale: 1 confezione da 750 g o 1 kg",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 7
     },
     {
       "text": "- Fiocchi d'avena: 1 confezione da 500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 8
     },
     {
       "text": "- Pane integrale: 1 confezione da 400-500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 9
     },
     {
       "text": "- Pasta: 1 confezione da 500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 10
     },
     {
       "text": "- Riso: 1 confezione da 500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 11
     },
     {
       "text": "- Patate: 1 kg",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 12
     },
     {
       "text": "- Ceci in scatola: 1 lattina grande (circa 240 g sgocciolati)",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 13
     },
     {
       "text": "- Lenticchie secche: 1 confezione da 500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 14
     },
     {
       "text": "- Banane: 3",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 15
     },
     {
       "text": "- Mele: 3",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 16
     },
     {
       "text": "- Zucchine: 400 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 17
     },
     {
       "text": "- Carote: 500 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 18
     },
     {
       "text": "- Spinaci surgelati: 1 confezione da 450 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 19
     },
     {
       "text": "- Passata di pomodoro: 1 bottiglia da 700 g",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 20
     },
     {
       "text": "- Cipolle: 2",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 21
     },
     {
       "text": "Latte di avena",
-      "cat": "generale"
+      "cat": "generale",
+      "id": 22
+    },
+    {
+      "text": "Test",
+      "cat": "generale",
+      "id": 23
     }
-  ]
+  ],
+  "shopping": [],
+  "next_id": 24,
+  "shop_msg": 0,
+  "todo_msg": 66,
+  "mode": "todo"
 }

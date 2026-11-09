@@ -1,6 +1,6 @@
 {
   "offset": 200012501,
-  "last_recap": "2026-11-08",
+  "last_recap": "2026-11-09",
   "items": [
     {
       "text": "Sapone bucato",
@@ -126,6 +126,6 @@
   "shopping": [],
   "next_id": 25,
   "shop_msg": 0,
-  "todo_msg": 66,
+  "todo_msg": 71,
   "mode": "todo"
 }

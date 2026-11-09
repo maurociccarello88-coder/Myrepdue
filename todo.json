@@ -1,5 +1,5 @@
 {
-  "offset": 200012478,
+  "offset": 200012494,
   "last_recap": "2026-11-08",
   "items": [
     {
@@ -116,10 +116,15 @@
       "text": "Test",
       "cat": "generale",
       "id": 23
+    },
+    {
+      "text": "@userinfobot",
+      "cat": "generale",
+      "id": 24
     }
   ],
   "shopping": [],
-  "next_id": 24,
+  "next_id": 25,
   "shop_msg": 0,
   "todo_msg": 66,
   "mode": "todo"

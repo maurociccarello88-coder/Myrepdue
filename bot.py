@@ -46,7 +46,8 @@ HELP = (
     "• /svuotaspesa - svuota la spesa\n\n"
     "Ogni riga di un messaggio è una voce separata. "
     "Le risposte e gli aggiornamenti arrivano a ogni passaggio del bot "
-    "(ogni ora circa), non subito."
+    "(ogni ora circa), non subito. Quando tocchi una voce, al passaggio "
+    "successivo ricevi la lista aggiornata in un nuovo messaggio."
 )
 
 
@@ -319,6 +320,8 @@ def send_list(db, kind):
 def refresh_lists(db, state):
     """Aggiorna i messaggi già inviati, così le voci toccate spariscono."""
     for kind, (_, msg_key) in KEYS.items():
+        if kind in state["resend"]:
+            continue  # arriva un nuovo messaggio: quello vecchio resta com'è
         ids = set(state["refresh"][kind])
         if state["dirty"][kind] and db.get(msg_key):
             ids.add(db[msg_key])
@@ -421,6 +424,7 @@ def handle_callback(db, cq, state):
         if msg.get("message_id"):
             state["refresh"][kind].add(msg["message_id"])
     if done:
+        state["resend"].add(kind)  # a fine passaggio arriva la lista aggiornata
         answer = f"{'Tolto' if kind == 's' else 'Fatto'}: {done}"
     else:
         answer = "Già fatto"
@@ -431,6 +435,7 @@ def handle_callback(db, cq, state):
 def process_updates(db):
     state = {
         "show": set(),
+        "resend": set(),
         "refresh": {"t": set(), "s": set()},
         "dirty": {"t": False, "s": False},
     }
@@ -481,7 +486,7 @@ def main():
     # nuovo messaggio con i bottoni: su richiesta, o se non ne esiste ancora uno
     sent = set()
     for kind, (key, msg_key) in KEYS.items():
-        if kind in state["show"] or (
+        if kind in state["show"] or kind in state["resend"] or (
             state["dirty"][kind] and db[key] and not db.get(msg_key)
         ):
             send_list(db, kind)

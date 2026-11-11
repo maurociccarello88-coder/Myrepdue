@@ -1,5 +1,5 @@
 {
-  "offset": 200012531,
+  "offset": 200012579,
   "last_recap": "2026-11-10",
   "items": [
     {
@@ -128,9 +128,14 @@
       "id": 25
     }
   ],
-  "shopping": [],
-  "next_id": 26,
-  "shop_msg": 0,
-  "todo_msg": 77,
+  "shopping": [
+    {
+      "id": 26,
+      "text": "Pomodori"
+    }
+  ],
+  "next_id": 27,
+  "shop_msg": 80,
+  "todo_msg": 81,
   "mode": "todo"
 }

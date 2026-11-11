@@ -33,11 +33,41 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: "669785876"
+          # id del gruppo condiviso da leggere (numero negativo).
+          GROUP_IDS: "-1003701476026"
+          # dove vanno i messaggi del gruppo: "spesa" oppure "todo"
+          GROUP_MODE: "spesa"
+          # nel gruppo i messaggi con queste parole vengono ignorati (promemoria della cena ecc.)
+          IGNORE_KEYWORDS: "stasera,cena,pranzo,menu"
           FORCE_RECAP: ${{ inputs.force_recap }}
 
+      # Salva lo stato (offset e liste) anche se il bot ha avuto un errore
       - name: Salva la lista nel repository
+        if: always()
         run: |
           git config user.name "todo-bot"
           git config user.email "todo-bot@users.noreply.github.com"
           git add todo.json
-          git diff --cached --quiet || (git commit -m "Aggiorna todo" && git push)
+          if git diff --cached --quiet; then
+            echo "Nessuna modifica da salvare"
+            exit 0
+          fi
+          git commit -m "Aggiorna todo"
+          for i in 1 2 3; do
+            if git pull --rebase origin "${{ github.ref_name }}" && git push; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Salvataggio non riuscito"
+          exit 1
+
+      - name: Avvisa su Telegram se qualcosa non ha funzionato
+        if: failure()
+        run: |
+          curl -s "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            -d chat_id=669785876 \
+            --data-urlencode "text=⚠️ Il bot ha avuto un errore su GitHub. Dettagli: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            > /dev/null
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}

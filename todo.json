@@ -1,32 +1,7 @@
 {
-  "offset": 200012579,
+  "offset": 200012594,
   "last_recap": "2026-11-10",
   "items": [
-    {
-      "text": "Sapone bucato",
-      "cat": "generale",
-      "id": 1
-    },
-    {
-      "text": "Ammorbidente",
-      "cat": "generale",
-      "id": 2
-    },
-    {
-      "text": "Fette biscottate",
-      "cat": "generale",
-      "id": 3
-    },
-    {
-      "text": "- Petto di pollo: 500 g",
-      "cat": "generale",
-      "id": 4
-    },
-    {
-      "text": "- Tonno al naturale: 1 scatoletta grande",
-      "cat": "generale",
-      "id": 5
-    },
     {
       "text": "- Uova: 1 confezione da 6",
       "cat": "generale",
@@ -46,31 +21,6 @@
       "text": "- Pane integrale: 1 confezione da 400-500 g",
       "cat": "generale",
       "id": 9
-    },
-    {
-      "text": "- Pasta: 1 confezione da 500 g",
-      "cat": "generale",
-      "id": 10
-    },
-    {
-      "text": "- Riso: 1 confezione da 500 g",
-      "cat": "generale",
-      "id": 11
-    },
-    {
-      "text": "- Patate: 1 kg",
-      "cat": "generale",
-      "id": 12
-    },
-    {
-      "text": "- Ceci in scatola: 1 lattina grande (circa 240 g sgocciolati)",
-      "cat": "generale",
-      "id": 13
-    },
-    {
-      "text": "- Lenticchie secche: 1 confezione da 500 g",
-      "cat": "generale",
-      "id": 14
     },
     {
       "text": "- Banane: 3",
@@ -93,31 +43,6 @@
       "id": 18
     },
     {
-      "text": "- Spinaci surgelati: 1 confezione da 450 g",
-      "cat": "generale",
-      "id": 19
-    },
-    {
-      "text": "- Passata di pomodoro: 1 bottiglia da 700 g",
-      "cat": "generale",
-      "id": 20
-    },
-    {
-      "text": "- Cipolle: 2",
-      "cat": "generale",
-      "id": 21
-    },
-    {
-      "text": "Latte di avena",
-      "cat": "generale",
-      "id": 22
-    },
-    {
-      "text": "Test",
-      "cat": "generale",
-      "id": 23
-    },
-    {
       "text": "@userinfobot",
       "cat": "generale",
       "id": 24
@@ -136,6 +61,6 @@
   ],
   "next_id": 27,
   "shop_msg": 80,
-  "todo_msg": 81,
+  "todo_msg": 83,
   "mode": "todo"
 }

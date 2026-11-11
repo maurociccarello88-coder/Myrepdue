@@ -26,6 +26,27 @@ API = f"https://api.telegram.org/bot{TOKEN}"
 DEFAULT_CAT = "generale"
 SHOP_CAT = "spesa"
 
+# Gruppi condivisi che il bot deve leggere (id negativi, separati da virgola).
+# Qualunque altra chat viene ignorata e non viene memorizzata.
+GROUP_IDS = {int(x) for x in re.findall(r"-?\d+", os.environ.get("GROUP_IDS", ""))}
+# dove finiscono i messaggi scritti nel gruppo: "spesa" (lista della spesa) o "todo"
+GROUP_MODE = os.environ.get("GROUP_MODE", "spesa").strip().lower()
+# nel gruppo si ignorano i messaggi che contengono queste parole (es. promemoria della cena)
+IGNORE_WORDS = [w.strip().lower() for w in os.environ.get("IGNORE_KEYWORDS", "").split(",") if w.strip()]
+# comandi che si possono dare dal gruppo (gli altri restano solo per la tua chat)
+GROUP_COMMANDS = {"/spesa", "/add", "/list", "/help", "/start"}
+
+VERSION = "11-nov-a"
+MANUAL = os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch"  # "Run workflow" a mano
+LOG = []
+
+
+def note(text):
+    """Scrive nel log di GitHub e lo ricorda per il messaggio di diagnosi."""
+    print(text)
+    LOG.append(text)
+
+
 # tipo di lista -> (chiave dei dati, chiave dell'ultimo messaggio inviato)
 KEYS = {"t": ("items", "todo_msg"), "s": ("shopping", "shop_msg")}
 
@@ -44,6 +65,10 @@ HELP = (
     "• /spesa latte, pane - aggiunge e mostra la lista\n"
     "• #spesa latte - aggiunge alla spesa anche in modalità to-do\n"
     "• /svuotaspesa - svuota la spesa\n\n"
+    "👥 Gruppo\n"
+    "• se il bot è nel gruppo condiviso (GROUP_IDS), i messaggi del gruppo vanno nella spesa; "
+    "i messaggi dei bot e quelli con le parole da ignorare (es. la cena) non vengono letti\n"
+    "• /id - mostra l'id della chat in cui lo scrivi\n\n"
     "Ogni riga di un messaggio è una voce separata. "
     "Le risposte e gli aggiornamenti arrivano a ogni passaggio del bot "
     "(ogni ora circa), non subito. Quando tocchi una voce, al passaggio "
@@ -63,17 +88,17 @@ def api_safe(method, **params):
     try:
         return api(method, **params)
     except urllib.error.HTTPError as e:
-        print(f"{method}: HTTP {e.code} {e.read().decode(errors='replace')}")
+        note(f"Errore Telegram in {method}: HTTP {e.code} {e.read().decode(errors='replace')}")
     except urllib.error.URLError as e:
-        print(f"{method}: {e.reason}")
+        note(f"Errore Telegram in {method}: {e.reason}")
     return None
 
 
-def send(text, markup=None):
-    params = {"chat_id": CHAT_ID, "text": text}
+def send(text, markup=None, chat_id=None):
+    params = {"chat_id": chat_id or CHAT_ID, "text": text}
     if markup:
         params["reply_markup"] = json.dumps(markup)
-    return api("sendMessage", **params)
+    return api_safe("sendMessage", **params)
 
 
 def new_id(db):
@@ -314,7 +339,10 @@ def view(db, kind):
 def send_list(db, kind):
     text, markup = view(db, kind)
     result = send(text, markup)
+    if not result:
+        return False
     db[KEYS[kind][1]] = result["result"]["message_id"]
+    return True
 
 
 def refresh_lists(db, state):
@@ -362,12 +390,13 @@ def add_items(db, raw):
     return "\n".join(p for p in parts if p) or "Scrivi cosa aggiungere, ad esempio: /add #spesa latte"
 
 
-def handle_message(db, text, state):
+def handle_message(db, text, state, mode=None):
+    mode = mode or db["mode"]
     text = text.strip()
     if not text.startswith("/"):
         if looks_like_ingredients(text):
             return shopping_reply(add_shopping(db, text, split_commas=False)) or "Niente da aggiungere."
-        if db["mode"] == "spesa":
+        if mode == "spesa":
             return shopping_reply(add_shopping(db, text)) or "Niente da aggiungere."
         return add_items(db, text)
 
@@ -407,9 +436,8 @@ def handle_message(db, text, state):
 
 def handle_callback(db, cq, state):
     msg = cq.get("message") or {}
-    if cq.get("from", {}).get("id") != CHAT_ID:
-        return
-    if msg.get("chat", {}).get("id") != CHAT_ID:
+    if cq.get("from", {}).get("id") != CHAT_ID or msg.get("chat", {}).get("id") != CHAT_ID:
+        note(f"Tocco {cq.get('data')!r} ignorato: arriva da un altro utente/chat")
         return
     kind, done = None, None
     m = re.fullmatch(r"([st]):(\d+)", cq.get("data", ""))
@@ -423,6 +451,7 @@ def handle_callback(db, cq, state):
                 break
         if msg.get("message_id"):
             state["refresh"][kind].add(msg["message_id"])
+    note(f"Tocco {cq.get('data')!r}: " + (f"tolto '{done}'" if done else "voce non trovata"))
     if done:
         state["resend"].add(kind)  # a fine passaggio arriva la lista aggiornata
         answer = f"{'Tolto' if kind == 's' else 'Fatto'}: {done}"
@@ -432,33 +461,83 @@ def handle_callback(db, cq, state):
     api_safe("answerCallbackQuery", callback_query_id=cq["id"], text=answer)
 
 
+def is_ignored_text(text):
+    """Messaggi del gruppo da non leggere (es. promemoria su cosa mangiare)."""
+    low = text.lower()
+    return any(re.search(rf"\b{re.escape(w)}\b", low) for w in IGNORE_WORDS)
+
+
+def handle_group_message(db, msg, state):
+    text = (msg.get("text") or "").strip()
+    sender = msg.get("from") or {}
+    if not text or sender.get("is_bot"):
+        return  # niente testo, oppure scritto da un altro bot (es. promemoria automatici)
+    if text.startswith("/"):
+        cmd = text.split(None, 1)[0].split("@")[0].lower()
+        if cmd not in GROUP_COMMANDS:
+            return
+    elif is_ignored_text(text):
+        note(f"Messaggio del gruppo ignorato (parola da ignorare): {text[:40]!r}")
+        return
+    reply = handle_message(db, text, state, mode=GROUP_MODE)
+    if reply:
+        # la conferma arriva a te in privato, senza riempire di messaggi il gruppo
+        send(f"👥 {sender.get('first_name') or 'Gruppo'}: {reply}")
+
+
+def handle_update(db, update, state):
+    if "callback_query" in update:
+        handle_callback(db, update["callback_query"], state)
+        return
+    msg = update.get("message") or {}
+    chat = msg.get("chat") or {}
+    chat_id = chat.get("id")
+    text = msg.get("text")
+    if chat_id == CHAT_ID:
+        if text:
+            reply = handle_message(db, text, state)
+            if reply:
+                send(reply)
+    elif chat_id in GROUP_IDS:
+        handle_group_message(db, msg, state)
+    elif chat_id is not None:
+        # chat non autorizzata: non viene letta né memorizzata
+        if text and text.split()[0].split("@")[0].lower() == "/id":
+            send(f"ID di questa chat: {chat_id}", chat_id=chat_id)
+        elif chat_id not in state["ignored"]:
+            state["ignored"].add(chat_id)
+            note(f"Chat ignorata: {chat_id} ({chat.get('title') or chat.get('type')}). "
+                 "Per leggerla aggiungi il suo id a GROUP_IDS nel workflow.")
+
 def process_updates(db):
     state = {
         "show": set(),
         "resend": set(),
         "refresh": {"t": set(), "s": set()},
         "dirty": {"t": False, "s": False},
+        "ignored": set(),
     }
     before = {k: json.dumps(db[KEYS[k][0]]) for k in KEYS}
+    info = api_safe("getWebhookInfo")
+    if info and isinstance(info.get("result"), dict):
+        r = info["result"]
+        note(f"In attesa su Telegram: {r.get('pending_update_count')} (webhook: {r.get('url') or 'nessuno'})")
+    note(f"Stato all'avvio: offset {db['offset']}, to-do {len(db['items'])}, spesa {len(db['shopping'])}")
     result = api(
         "getUpdates",
         offset=db["offset"],
         timeout=0,
         allowed_updates=json.dumps(["message", "callback_query"]),
     )
-    for update in result.get("result", []):
+    updates = result.get("result", [])
+    taps = sum(1 for u in updates if "callback_query" in u)
+    note(f"Ricevuti {len(updates)} aggiornamenti: {len(updates) - taps} messaggi, {taps} tocchi")
+    for update in updates:
         db["offset"] = update["update_id"] + 1
-        if "callback_query" in update:
-            handle_callback(db, update["callback_query"], state)
-            continue
-        msg = update.get("message") or {}
-        if msg.get("chat", {}).get("id") != CHAT_ID:
-            continue  # ignora chiunque non sia tu
-        text = msg.get("text")
-        if text:
-            reply = handle_message(db, text, state)
-            if reply:
-                send(reply)
+        try:
+            handle_update(db, update, state)
+        except Exception as e:  # un aggiornamento difettoso non deve bloccare gli altri
+            note(f"Errore sull'aggiornamento {update.get('update_id')}: {type(e).__name__}: {e}")
     for k in KEYS:
         state["dirty"][k] = json.dumps(db[KEYS[k][0]]) != before[k]
     return state
@@ -469,30 +548,37 @@ def maybe_send_recap(db, sent):
     today = now.date().isoformat()
     due = now.hour >= RECAP_HOUR and db.get("last_recap") != today
     if due or FORCE_RECAP:
+        ok = True
         if not db["items"]:
-            send("✅ Niente in sospeso, buona serata!")
+            ok = send("✅ Niente in sospeso, buona serata!") is not None
         elif "t" not in sent:
-            send_list(db, "t")
+            ok = send_list(db, "t") and ok
         if db["shopping"] and "s" not in sent:
-            send_list(db, "s")
-        if due:
+            ok = send_list(db, "s") and ok
+        if due and ok:
             db["last_recap"] = today
 
 
 def main():
     db = load_db()
-    state = process_updates(db)
-    refresh_lists(db, state)
-    # nuovo messaggio con i bottoni: su richiesta, o se non ne esiste ancora uno
-    sent = set()
-    for kind, (key, msg_key) in KEYS.items():
-        if kind in state["show"] or kind in state["resend"] or (
-            state["dirty"][kind] and db[key] and not db.get(msg_key)
-        ):
-            send_list(db, kind)
-            sent.add(kind)
-    maybe_send_recap(db, sent)
-    save_db(db)
+    try:
+        state = process_updates(db)
+        refresh_lists(db, state)
+        # nuovo messaggio con i bottoni: su richiesta, o se non ne esiste ancora uno
+        sent = set()
+        for kind, (key, msg_key) in KEYS.items():
+            if kind in state["show"] or kind in state["resend"] or (
+                state["dirty"][kind] and db[key] and not db.get(msg_key)
+            ):
+                send_list(db, kind)
+                sent.add(kind)
+        maybe_send_recap(db, sent)
+        if MANUAL:
+            note(f"Stato finale: to-do {len(db['items'])}, spesa {len(db['shopping'])}")
+            send(f"🔧 Passaggio manuale (versione {VERSION})\n"
+                 + "\n".join(f"• {line}" for line in LOG)[:3500])
+    finally:
+        save_db(db)  # i tocchi già elaborati non vanno persi
 
 
 if __name__ == "__main__":

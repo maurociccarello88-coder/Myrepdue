@@ -1,58 +1,7 @@
 {
-  "offset": 200012594,
+  "offset": 200012627,
   "last_recap": "2026-11-13",
-  "items": [
-    {
-      "text": "- Uova: 1 confezione da 6",
-      "cat": "generale",
-      "id": 6
-    },
-    {
-      "text": "- Yogurt bianco naturale: 1 confezione da 750 g o 1 kg",
-      "cat": "generale",
-      "id": 7
-    },
-    {
-      "text": "- Fiocchi d'avena: 1 confezione da 500 g",
-      "cat": "generale",
-      "id": 8
-    },
-    {
-      "text": "- Pane integrale: 1 confezione da 400-500 g",
-      "cat": "generale",
-      "id": 9
-    },
-    {
-      "text": "- Banane: 3",
-      "cat": "generale",
-      "id": 15
-    },
-    {
-      "text": "- Mele: 3",
-      "cat": "generale",
-      "id": 16
-    },
-    {
-      "text": "- Zucchine: 400 g",
-      "cat": "generale",
-      "id": 17
-    },
-    {
-      "text": "- Carote: 500 g",
-      "cat": "generale",
-      "id": 18
-    },
-    {
-      "text": "@userinfobot",
-      "cat": "generale",
-      "id": 24
-    },
-    {
-      "text": "Riso",
-      "cat": "generale",
-      "id": 25
-    }
-  ],
+  "items": [],
   "shopping": [
     {
       "id": 26,

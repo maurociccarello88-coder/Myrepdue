@@ -1,6 +1,6 @@
 {
   "offset": 200012594,
-  "last_recap": "2026-11-12",
+  "last_recap": "2026-11-13",
   "items": [
     {
       "text": "- Uova: 1 confezione da 6",
@@ -60,7 +60,7 @@
     }
   ],
   "next_id": 27,
-  "shop_msg": 87,
-  "todo_msg": 86,
+  "shop_msg": 89,
+  "todo_msg": 88,
   "mode": "todo"
 }

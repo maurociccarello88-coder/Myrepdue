@@ -1,14 +1,105 @@
 {
-  "offset": 200012627,
+  "offset": 200012628,
   "last_recap": "2026-11-13",
-  "items": [],
+  "items": [
+    {
+      "text": "🔔 [LISTA DELLA SPESA PER LA PROSSIMA SETTIMANA]",
+      "cat": "generale",
+      "id": 27
+    },
+    {
+      "text": "🛒 LISTA DELLA SPESA - SETTIMANA A",
+      "cat": "generale",
+      "id": 28
+    },
+    {
+      "text": "Pasta integrale: 250 g",
+      "cat": "generale",
+      "id": 29
+    },
+    {
+      "text": "Riso basmati o integrale: 200 g",
+      "cat": "generale",
+      "id": 30
+    },
+    {
+      "text": "Farro o orzo perlato: 100 g",
+      "cat": "generale",
+      "id": 31
+    },
+    {
+      "text": "Patate: 1 kg",
+      "cat": "generale",
+      "id": 32
+    },
+    {
+      "text": "Pane integrale / piadine: 1 pacco",
+      "cat": "generale",
+      "id": 33
+    },
+    {
+      "text": "Ceci in scatola: 2 barattoli (480 g)",
+      "cat": "generale",
+      "id": 34
+    },
+    {
+      "text": "Lenticchie in scatola: 2 barattoli (480 g)",
+      "cat": "generale",
+      "id": 35
+    },
+    {
+      "text": "Uova: 1 confezione da 6",
+      "cat": "generale",
+      "id": 36
+    },
+    {
+      "text": "Petto di pollo: 400 g",
+      "cat": "generale",
+      "id": 37
+    },
+    {
+      "text": "Merluzzo surgelato: 300 g",
+      "cat": "generale",
+      "id": 38
+    },
+    {
+      "text": "Zucchine: 800 g",
+      "cat": "generale",
+      "id": 39
+    },
+    {
+      "text": "Spinaci (freschi o surgelati): 500 g",
+      "cat": "generale",
+      "id": 40
+    },
+    {
+      "text": "Carote: 500 g",
+      "cat": "generale",
+      "id": 41
+    },
+    {
+      "text": "Passata di pomodoro: 1 bottiglia (700 g)",
+      "cat": "generale",
+      "id": 42
+    },
+    {
+      "text": "Pomodorini: 1 vaschetta (250 g)",
+      "cat": "generale",
+      "id": 43
+    },
+    {
+      "text": "Insalata mista / valeriana: 2 buste (200 g)",
+      "cat": "generale",
+      "id": 44
+    }
+  ],
   "shopping": [
     {
       "id": 26,
       "text": "Pomodori"
     }
   ],
-  "next_id": 27,
+  "next_id": 45,
   "shop_msg": 89,
   "todo_msg": 88,
   "mode": "todo"

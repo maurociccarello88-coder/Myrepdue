@@ -1,6 +1,6 @@
 {
   "offset": 200012628,
-  "last_recap": "2026-11-14",
+  "last_recap": "2026-11-15",
   "items": [
     {
       "text": "🔔 [LISTA DELLA SPESA PER LA PROSSIMA SETTIMANA]",
@@ -100,7 +100,7 @@
     }
   ],
   "next_id": 45,
-  "shop_msg": 95,
-  "todo_msg": 94,
+  "shop_msg": 97,
+  "todo_msg": 96,
   "mode": "todo"
 }

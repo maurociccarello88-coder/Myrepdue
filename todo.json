@@ -1,6 +1,6 @@
 {
   "offset": 200012650,
-  "last_recap": "2026-11-24",
+  "last_recap": "2026-11-27",
   "items": [],
   "shopping": [
     {
@@ -9,7 +9,7 @@
     }
   ],
   "next_id": 45,
-  "shop_msg": 117,
+  "shop_msg": 119,
   "todo_msg": 102,
   "mode": "todo"
 }
